@@ -9,9 +9,11 @@ from apps.core.services import get_data
 def weather(request):
     location = request.GET.get('location', '')
     if cache.get(location):
+        print("data from redis")
         data = cache.get(location)
     else:
         try:
+            print("data from api")
             data = get_data(location)
             cache.set(location, data, 1800)
         except:
